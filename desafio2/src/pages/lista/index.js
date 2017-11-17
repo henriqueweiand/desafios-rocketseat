@@ -1,11 +1,9 @@
-
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-} from 'react-native';
+import { Text, View } from 'react-native';
 
-export default class App extends Component {
+// import styles from './styles';
+
+export default class Lista extends Component {
   componentWillMount = () => {
     // teste
   }
@@ -13,9 +11,7 @@ export default class App extends Component {
   render() {
     return (
       <View>
-        <Text>
-          teste
-        </Text>
+        <Text> Lista </Text>
       </View>
     );
   }

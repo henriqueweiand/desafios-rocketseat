@@ -9,7 +9,9 @@
   "dependencies": {
     "prop-types": "^15.6.0",
     "react": "16.0.0",
-    "react-native": "0.50.3"
+    "react-native": "0.50.3",
+    "react-navigation": "^1.0.0-beta.19",
+    "reactotron-react-native": "^1.12.3"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.2",
@@ -26,8 +28,7 @@
     "eslint-plugin-react-native": "^3.1.0",
     "i": "^0.3.6",
     "jest": "21.2.1",
-    "react-test-renderer": "16.0.0",
-    "reactotron-react-native": "^1.12.3"
+    "react-test-renderer": "16.0.0"
   },
   "jest": {
     "preset": "react-native"
