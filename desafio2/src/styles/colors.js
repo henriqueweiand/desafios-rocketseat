@@ -1,0 +1,8 @@
+export default {
+  white: '#FFF',
+  light: '#EEE',
+  lightdark: '#333333',
+  dark: '#666666',
+  darker: '#444',
+  background: '#EEEEEE',
+};
