@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { TextInput, TouchableOpacity, View, FlatList, Text, ActivityIndicator, AsyncStorage } from 'react-native';
+import PropTypes from 'prop-types';
 
 import Reactotron from 'reactotron-react-native';
 
 import Header from 'components/header';
 import Repository from 'components/repository';
 import api from 'services/api';
+import { NavigationActions } from 'react-navigation';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -16,10 +18,17 @@ export default class Lista extends Component {
     header: null,
   };
 
+  static propTypes = {
+    navigation: PropTypes.shape({
+      dispatch: PropTypes.func,
+      navigate: PropTypes.func,
+    }).isRequired,
+  };
+
   state = {
+    refreshing: false,
     repositories: [],
     loading: false,
-    refreshing: false,
     newRepository: '',
     error: false,
   };
@@ -44,6 +53,7 @@ export default class Lista extends Component {
     }
 
     storageRepositories.push({
+      key: Math.random(),
       id,
       name,
       description,
@@ -75,6 +85,19 @@ export default class Lista extends Component {
       });
   };
 
+  paginate = (item) => {
+    AsyncStorage.setItem('@githuber:selected', JSON.stringify(item));
+
+    const { dispatch } = this.props.navigation;
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Issues' }),
+      ],
+    });
+
+    dispatch(resetAction);
+  };
 
   loadRepositories = async () => {
     this.setState({ refreshing: true });
@@ -89,9 +112,20 @@ export default class Lista extends Component {
 
   renderRepositories = () => (
     <FlatList
+      onRefresh={() => this.loadRepositories()}
+      refreshing={this.state.refreshing}
       data={this.state.repositories}
       keyExtractor={repository => repository.id}
-      renderItem={({ item }) => <Repository repository={item} />}
+      renderItem={({ item }) => {
+          return (
+            <TouchableOpacity onPress={() => this.paginate(item)}>
+              <View>
+                <Repository repository={item} />
+              </View>
+            </TouchableOpacity>
+          );
+        }
+      }
     />
   );
 
@@ -117,7 +151,7 @@ export default class Lista extends Component {
             <Icon name="plus" style={styles.icon} />
           </TouchableOpacity>
         </Header>
-        <View>
+        <View style={styles.container}>
           { this.state.error && <Text style={styles.error}>Repositorio não localizado</Text> }
 
           { this.state.loading

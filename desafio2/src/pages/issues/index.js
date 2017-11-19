@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, AsyncStorage } from 'react-native';
 
 // import styles from './styles';
+import Reactotron from 'reactotron-react-native';
 
 export default class Issues extends Component {
-  static navigationOptions = {
-    header: null,
+  state = {
+    repository: false,
   };
 
   componentWillMount = () => {
-    // teste
+    this.getDataRepository();
+  }
+
+  getDataRepository = async () => {
+    const storageRepositorie = await JSON.parse(AsyncStorage.getItem('@githuber:repository'));
+    this.setState({ repository: storageRepositorie });
+
+    Reactotron.log(this.state.repository);
   }
 
   render() {
