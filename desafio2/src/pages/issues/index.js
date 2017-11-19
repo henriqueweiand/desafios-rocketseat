@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, AsyncStorage } from 'react-native';
-
-// import styles from './styles';
+import { Text, View } from 'react-native';
+import { getDataRepository } from 'services/functions';
 import Reactotron from 'reactotron-react-native';
+
+import styles from './styles';
 
 export default class Issues extends Component {
   state = {
@@ -10,20 +11,15 @@ export default class Issues extends Component {
   };
 
   componentWillMount = () => {
-    this.getDataRepository();
-  }
-
-  getDataRepository = async () => {
-    const storageRepositorie = await JSON.parse(AsyncStorage.getItem('@githuber:repository'));
-    this.setState({ repository: storageRepositorie });
-
-    Reactotron.log(this.state.repository);
-  }
+    getDataRepository().then((repository) => {
+      this.setState({ repository });
+    });
+  };
 
   render() {
     return (
       <View>
-        <Text> Issues </Text>
+        <Text> { this.state.repository } </Text>
       </View>
     );
   }

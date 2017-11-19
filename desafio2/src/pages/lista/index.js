@@ -43,7 +43,7 @@ export default class Lista extends Component {
 
   checkAndSaveUser = async () => {
     const response = await api.get(`/repos/${this.state.newRepository}`);
-    const { id, name, description, owner: { avatar_url } } = response.data;
+    const { id, name, full_name, description, owner: { avatar_url } } = response.data;
 
     let storageRepositories = await AsyncStorage.getItem('@githuber:repository');
     storageRepositories = JSON.parse(storageRepositories);
@@ -56,6 +56,7 @@ export default class Lista extends Component {
       key: Math.random(),
       id,
       name,
+      full_name,
       description,
       avatar_url,
     });
@@ -85,18 +86,16 @@ export default class Lista extends Component {
       });
   };
 
-  paginate = (item) => {
-    AsyncStorage.setItem('@githuber:selected', JSON.stringify(item));
+  paginate = (fullName) => {
+    AsyncStorage.setItem('@githuber:selected', fullName);
 
     const { dispatch } = this.props.navigation;
-    const resetAction = NavigationActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: 'Issues' }),
-      ],
+    const navigateAction = NavigationActions.navigate({
+      routeName: 'Issues',
+      action: NavigationActions.navigate({ routeName: 'Issues'}),
     });
 
-    dispatch(resetAction);
+    dispatch(navigateAction);
   };
 
   loadRepositories = async () => {
@@ -118,7 +117,7 @@ export default class Lista extends Component {
       keyExtractor={repository => repository.id}
       renderItem={({ item }) => {
           return (
-            <TouchableOpacity onPress={() => this.paginate(item)}>
+            <TouchableOpacity onPress={() => this.paginate(item.full_name)}>
               <View>
                 <Repository repository={item} />
               </View>
