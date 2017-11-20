@@ -1,17 +1,55 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Text, TouchableOpacity, AsyncStorage } from 'react-native';
+
+import { getDataRepository } from 'services/functions';
+import PropTypes from 'prop-types';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import styles from './styles';
 
 export default class Header extends Component {
-  componentWillMount = () => {
-    // teste
+  static propTypes = {
+    navigation: PropTypes.shape({
+      goBack: PropTypes.func,
+    }).isRequired,
+  };
+
+  state = {
+    backButton: false,
   }
+
+  componentWillMount = () => {
+    getDataRepository().then((repository) => {
+      if (repository !== false && repository !== null) {
+        this.setState({ backButton: true });
+      }
+    });
+  }
+
+  backButton = async () => {
+    await AsyncStorage.removeItem('@githuber:selected');
+    this.setState({ backButton: false });
+    this.props.navigation.goBack();
+  };
 
   render() {
     return (
       <View style={styles.header}>
-        {this.props.children}
+        {
+          this.state.backButton
+            ?
+            (
+              <View>
+                <TouchableOpacity
+                  onPress={this.backButton}
+                >
+                  <Icon name="angle-left" style={styles.icon} />
+                </TouchableOpacity>
+                <Text> Voltar </Text>
+              </View>
+            )
+            : this.props.children
+        }
       </View>
     );
   }

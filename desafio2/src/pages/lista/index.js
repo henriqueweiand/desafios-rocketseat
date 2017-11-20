@@ -92,7 +92,7 @@ export default class Lista extends Component {
     const { dispatch } = this.props.navigation;
     const navigateAction = NavigationActions.navigate({
       routeName: 'Issues',
-      action: NavigationActions.navigate({ routeName: 'Issues'}),
+      action: NavigationActions.navigate({ routeName: 'Issues' }),
     });
 
     dispatch(navigateAction);
@@ -115,15 +115,13 @@ export default class Lista extends Component {
       refreshing={this.state.refreshing}
       data={this.state.repositories}
       keyExtractor={repository => repository.id}
-      renderItem={({ item }) => {
-          return (
-            <TouchableOpacity onPress={() => this.paginate(item.full_name)}>
-              <View>
-                <Repository repository={item} />
-              </View>
-            </TouchableOpacity>
-          );
-        }
+      renderItem={({ item }) => (
+        <TouchableOpacity onPress={() => this.paginate(item.full_name)}>
+          <View>
+            <Repository repository={item} />
+          </View>
+        </TouchableOpacity>
+      )
       }
     />
   );
