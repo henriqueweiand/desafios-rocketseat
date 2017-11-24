@@ -11,17 +11,26 @@ export default class Header extends Component {
   static propTypes = {
     navigation: PropTypes.shape({
       goBack: PropTypes.func,
-    }).isRequired,
+    }),
+  };
+
+  static defaultProps = {
+    navigation: {
+      goBack: this.backButton,
+    },
   };
 
   state = {
     backButton: false,
+    repository: '',
   }
 
   componentWillMount = () => {
     getDataRepository().then((repository) => {
       if (repository !== false && repository !== null) {
-        this.setState({ backButton: true });
+        //let repositoryStore = repository.JSON.parse(repository);
+        console.log(repository);
+        this.setState({ backButton: true, repository: repositoryStore });
       }
     });
   }
@@ -39,13 +48,17 @@ export default class Header extends Component {
           this.state.backButton
             ?
             (
-              <View>
+              <View style={styles.rowView}>
                 <TouchableOpacity
                   onPress={this.backButton}
                 >
-                  <Icon name="angle-left" style={styles.icon} />
+                  <Icon name="angle-left" style={styles.backButton} />
                 </TouchableOpacity>
-                <Text> Voltar </Text>
+                <Text
+                  style={styles.title}
+                >
+                  Voltar
+                </Text>
               </View>
             )
             : this.props.children
