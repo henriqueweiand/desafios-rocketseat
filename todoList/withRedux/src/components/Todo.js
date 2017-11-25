@@ -16,8 +16,8 @@ class Todo extends Component {
 
   render() {
     return (
-      <View>
-        <Text>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between', alignContent: 'center', marginVertical: 15  }}>
+        <Text style={{fontWeight: 'bold'}}>
           {this.props.todo.text}
         </Text>
         <TouchableOpacity onPress={() => this.removeTodoClass(this.props.todo.id)}>
