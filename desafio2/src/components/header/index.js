@@ -22,15 +22,12 @@ export default class Header extends Component {
 
   state = {
     backButton: false,
-    repository: '',
   }
 
   componentWillMount = () => {
     getDataRepository().then((repository) => {
       if (repository !== false && repository !== null) {
-        //let repositoryStore = repository.JSON.parse(repository);
-        console.log(repository);
-        this.setState({ backButton: true, repository: repositoryStore });
+        this.setState({ backButton: true });
       }
     });
   }

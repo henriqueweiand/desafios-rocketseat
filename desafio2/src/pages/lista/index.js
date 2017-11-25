@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { TextInput, TouchableOpacity, View, FlatList, Text, ActivityIndicator, AsyncStorage } from 'react-native';
 import PropTypes from 'prop-types';
 
-import Reactotron from 'reactotron-react-native';
-
 import Header from 'components/header';
 import Repository from 'components/repository';
 import api from 'services/api';
@@ -73,15 +71,12 @@ export default class Lista extends Component {
 
     this.checkAndSaveUser()
       .then(() => {
-        Reactotron.log('then');
-
         this.loadRepositories().then(() => {
           this.setState({ loading: false });
           this.renderList();
         });
       })
       .catch(() => {
-        Reactotron.log('catch');
         this.setState({ error: true, loading: false });
       });
   };
