@@ -9,6 +9,18 @@ import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 
 class Counter extends Component {
+  static propTypes = {
+    todos: PropTypes.array,
+  };
+
+  static defaultProps = {
+    todos: [],
+  };
+
+  componentDidMount() {
+    // teste
+  }
+
   render() {
     return (
       <View>

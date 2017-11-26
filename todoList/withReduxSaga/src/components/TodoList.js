@@ -1,5 +1,6 @@
 /* Core */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 /* Presentational */
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
@@ -11,6 +12,15 @@ import { addTodo } from 'redux/ducks/todos';
 import Todo from './Todo';
 
 class TodoList extends Component {
+  static propTypes = {
+    todos: PropTypes.array,
+    addTodo: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    todos: [],
+  };
+
   state = {
     newTodoText: '',
   };
