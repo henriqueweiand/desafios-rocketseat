@@ -5,7 +5,7 @@ import { Text, View, TouchableOpacity } from 'react-native';
 
 /* Redux */
 import { connect } from 'react-redux';
-import { removeTodo } from 'actions/todos';
+import { removeTodo } from 'redux/ducks/todos';
 
 class Todo extends Component {
   removeTodoClass = (id) => {

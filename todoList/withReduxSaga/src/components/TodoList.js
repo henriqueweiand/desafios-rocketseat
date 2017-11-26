@@ -6,7 +6,7 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 
 /* Redux */
 import { connect } from 'react-redux';
-import { addTodo } from 'actions/todos';
+import { addTodo } from 'redux/ducks/todos';
 
 import Todo from './Todo';
 
